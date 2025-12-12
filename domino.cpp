@@ -1,3 +1,6 @@
+// Lucas Alan Costa Novais 252013404
+// Trabalho CPE 12/12/25
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -11,7 +14,7 @@ struct Peca {
 };
 
 void mostrarPeca(const Peca &p) {
-    cout << "[" << p.a << "|" << p.b << "]"; // mostra na tela 
+    cout << "[" << p.a << "|" << p.b << "]"; // mostra na tela a peca de domino
 }
 
 void mostrarVetor(const vector<Peca> &v) {
@@ -22,7 +25,7 @@ void mostrarVetor(const vector<Peca> &v) {
     cout << "\n";
 }
 
-vector<Peca> criarMao() { // assosia a peca a mao do jogador
+vector<Peca> criarMao() { // Cria pecas e manda para 
     vector<Peca> b;
     for (int i = 0; i <= 6; i++)
         for (int j = i; j <= 6; j++)
@@ -36,11 +39,11 @@ void misturar(vector<Peca> &b) {
 }
 
 bool podeJogar(const Peca &p, int ladoEsq, int ladoDir) {
-    return (p.a == ladoEsq || p.b == ladoEsq || p.a == ladoDir || p.b == ladoDir);
+    return (p.a == ladoEsq || p.b == ladoEsq || p.a == ladoDir || p.b == ladoDir); // testar se a peca pode ser jogada
 }
 
 Peca inverter(Peca p) {
-    return {p.b, p.a};
+    return {p.b, p.a}; // trocar lado da peca
 }
 
 int main() {
@@ -92,7 +95,7 @@ int main() {
         }
 
         // Se não, verificar nos PCs
-        if (jogadorComeca == -1) {
+        if (jogadorComeca == -1) { // verifica qual pc esta com a buxa
             vector<vector<Peca>*> pcs = {&pc1, &pc2, &pc3};
             for (int p = 0; p < 3; p++) {
                 for (int i = 0; i < (int)pcs[p]->size(); i++) {
@@ -107,15 +110,15 @@ int main() {
         }
 
         if (jogadorComeca == 0) {
-            mesa.push_back(jogador[idxComeca]);
-            jogador.erase(jogador.begin() + idxComeca);
-            cout << "\nVocê tem a peça 6|6! Você começa, mas pula a vez.\n";
-            turnoAtual = (0 + 1) % 4; // Pula para PC1
+            mesa.push_back(jogador[idxComeca]); // coloca na mesa
+            jogador.erase(jogador.begin() + idxComeca); // tira da mão para não duplicar
+            cout << "\nVocê tem a peça 6|6! Você começa, automaticamente.\n";
+            turnoAtual = (0 + 1) % 4; // Pula para PC1; foi usado desta maneira para não ter dar valores
         } else if (jogadorComeca >= 1 && jogadorComeca <= 3) {
             vector<vector<Peca>*> pcs = {&pc1, &pc2, &pc3};
             mesa.push_back((*pcs[jogadorComeca - 1])[idxComeca]);
             pcs[jogadorComeca - 1]->erase(pcs[jogadorComeca - 1]->begin() + idxComeca);
-            cout << "\nO PC" << jogadorComeca << " tem a peça 6|6! O PC" << jogadorComeca << " começa, mas pula a vez.\n";
+            cout << "\nO PC" << jogadorComeca << " tem a peça 6|6! O PC" << jogadorComeca << " começa, automaticamente.\n";
             turnoAtual = (jogadorComeca + 1) % 4; // Pula para o próximo
         } else {
             // Caso improvável
@@ -156,7 +159,7 @@ int main() {
 
                 if (idx == 9) { // passar a vez
                     cout << "Você passou.\n";
-                    turnoAtual = (turnoAtual + 1) % 4;
+                    turnoAtual = (turnoAtual + 1) % 4; // faz o turno e retorna a 0 quanto chegar a 3
                     continue;
                 }
                 if (idx == 8){
@@ -203,7 +206,7 @@ int main() {
             }
             else { // Vez dos PCs
                 int pcNum = turnoAtual;
-                vector<Peca>* pcAtual = (turnoAtual == 1) ? &pc1 : (turnoAtual == 2) ? &pc2 : &pc3;
+                vector<Peca>* pcAtual = (turnoAtual == 1) ? &pc1 : (turnoAtual == 2) ? &pc2 : &pc3; // muda de mão de forma generica
                 cout << "\nVez do PC" << pcNum << "...\n";
 
                 bool jogou = false;
