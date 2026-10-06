@@ -1,0 +1,22 @@
+name: Build C++
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compilar
+        run: g++ -std=c++17 -Wall -Wextra -pedantic domino.cpp -o domino
+
+      - name: Testar execução
+        run: |
+          printf "2\n" | ./domino
